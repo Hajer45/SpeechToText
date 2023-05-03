@@ -67,7 +67,6 @@ function speechToText() {
     };
   } catch (error) {
     recording = false;
-
     console.log(error);
   }
 }
@@ -87,3 +86,25 @@ function stopRecording() {
   recordBtn.classList.remove("recording");
   recording = false;
 }
+function download() {
+    const text = result.innerText;
+    const filename = "speech.txt";
+  
+    const element = document.createElement("a");
+    element.setAttribute(
+      "href",
+      "data:text/plain;charset=utf-8," + encodeURIComponent(text)
+    );
+    element.setAttribute("download", filename);
+    element.style.display = "none";
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  }
+  
+  downloadBtn.addEventListener("click", download);
+  
+  clearBtn.addEventListener("click", () => {
+    result.innerHTML = "";
+    downloadBtn.disabled = true;
+  });
